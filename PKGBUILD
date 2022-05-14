@@ -1,7 +1,7 @@
 # Maintainer: Your Name 2364261262@qq.com
 # created from /usr/share/pacman/PKGBUILD-vcs.proto
 pkgname=warpd-both
-pkgver=VERSION
+pkgver=r149.a60912d
 pkgrel=1
 pkgdesc="Use rvaiya/warpd in both x11 and wayland"
 arch=("x86_64")
@@ -14,8 +14,11 @@ conflicts=("warpd")
 source=("git+$url")
 md5sums=('SKIP')
 
-# Please refer to the 'USING VCS SOURCES' section of the PKGBUILD man page for
-# a description of each element in the source array.
+# fetch upstream
+prepare() {
+	cd "$srcdir/aur-warpd-both"
+	git submodule update --init --recursive
+}
 
 pkgver() {
 	cd "$srcdir/aur-warpd-both"
@@ -33,8 +36,13 @@ build() {
 
 package() {
 	cd "$srcdir/aur-warpd-both"
-	make DESTDIR="$pkgdir/" install
-	install -Dm755 -t "${pkgdir}"/usr/bin warpd/bin/warpd-x11
-	install -Dm755 -t "${pkgdir}"/usr/bin warpd/bin/warpd-wayland
+# cd into the submodule
+	cd "warpd"
+# install the binary executables
+	install -Dm755 -t "${pkgdir}"/usr/bin bin/warpd-x11
+	install -Dm755 -t "${pkgdir}"/usr/bin bin/warpd-wayland
+# go back to source directory
+	cd ../
+# install the launcher shell script
 	install -Dm755 -t "${pkgdir}"/usr/bin warpd.fish
 }
