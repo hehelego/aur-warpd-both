@@ -1,4 +1,4 @@
-# Maintainer: Your Name 2364261262@qq.com
+# Maintainer: hehelego 2364261262@qq.com
 # created from /usr/share/pacman/PKGBUILD-vcs.proto
 pkgname=warpd-both
 pkgver=r149.a60912d
