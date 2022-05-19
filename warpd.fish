@@ -1,2 +1,4 @@
 #!/usr/bin/env fish
-warpd-$XDG_SESSION_TYPE $argv
+pkill warpd
+warpd-$XDG_SESSION_TYPE $argv &
+disown $last_pid
